@@ -4,17 +4,39 @@
 
 > **Your agent paid. Should it trust the result?**
 
-MOV is the acceptance layer between machine payment and machine action. It evaluates the exact result of a paid API, MCP tool, or machine service against buyer-owned acceptance requirements **before downstream software uses it**.
+MOV gives software a deterministic acceptance decision for the exact result of a paid API, MCP tool, or machine service **before downstream software acts on it**.
+
+```text
+PAID → DELIVERED → ACCEPT?
+```
+
+Payment and delivery can both succeed while the purchased result is still wrong for the buyer. MOV keeps those facts separate and returns:
+
+```text
+ACCEPT | REJECT | UNKNOWN
+```
 
 - Website: https://machineoutcome.com/
-- Public repository: https://github.com/SamCT86/mov-runtime-acceptance
 - Public release: **0.1.0**
 - Operator: **Sarmad Tawfeek · Sweden**
 - Contact: `sarmad@machineoutcome.com`
 
 > **Repository scope:** this is MOV's public developer, contract, release-verification, and proof surface. The private implementation core and its git history are intentionally not mirrored here.
 
-## The problem
+## When MOV is useful
+
+MOV is designed for software that pays another machine service and needs more than “the request succeeded” before using the result.
+
+Typical cases include:
+
+- an agent buys structured data and must confirm it refers to the right entity;
+- a paid service returns a valid schema but stale, mismatched, or unacceptable content;
+- downstream automation should stop when required evidence is missing or contradictory;
+- a team needs a reproducible record of **why** a paid result was accepted, rejected, or left unknown.
+
+If a normal local assertion against the response is sufficient for your risk and evidence needs, use the assertion. MOV is for cases where acceptance must be bound to the **buyer contract + exact paid attempt + exact delivery + required evidence**.
+
+## The failure MOV is built for
 
 A paid machine-service call can look completely healthy and still be wrong for the buyer:
 
@@ -38,9 +60,9 @@ MOV answers a different question:
 MOV exposes one buyer-facing three-state decision:
 
 ```text
-ACCEPT   -> continue
-REJECT   -> stop or switch provider
-UNKNOWN  -> reconcile evidence, retry later, or escalate
+ACCEPT   → continue
+REJECT   → stop or switch provider
+UNKNOWN  → reconcile evidence, retry later, or escalate
 ```
 
 `UNKNOWN` is first-class. Missing, contradictory, unavailable, corrupt, or non-final required evidence does not become acceptance.
@@ -55,7 +77,7 @@ The current release is local-first and registry-unpublished. Install the exact p
 npm install https://machineoutcome.com/downloads/mov-runtime-acceptance-0.1.0.tgz
 ```
 
-Download the recorded ACCEPT fixture and run it.
+Then run the recorded ACCEPT fixture.
 
 ### macOS / Linux
 
@@ -115,6 +137,12 @@ The buyer owns acceptance semantics. Payment success, HTTP 2xx, receipt validity
 
 See [High-level architecture](docs/architecture.md).
 
+## What MOV is not
+
+MOV 0.1.0 is not a generic API test framework, payment checker, agent evaluator, wallet, escrow service, hosted control plane, or LLM judge.
+
+Its current job is deliberately narrow: **decide whether one exact paid machine-service result satisfies the buyer's acceptance contract.**
+
 ## Release integrity
 
 MOV 0.1.0 currently publishes:
@@ -162,9 +190,9 @@ See [Public/private boundary](docs/public-boundary.md).
 
 ## Current status
 
-MOV 0.1.0 is a finished narrow local Runtime Acceptance release. Current external work is focused on validation with independent developers and teams using real paid machine-service flows.
+MOV 0.1.0 is available as a narrow local Runtime Acceptance release for developers evaluating paid machine-service flows. The public artifact is local-first, no-custody, and has no live-payment capability.
 
-No GitHub star, download, automated QA result, or repository activity should be interpreted as proof of customer demand or willingness to pay.
+Commercial validation is tracked separately from technical quality. Repository activity, downloads, automated QA, or stars are not treated as customer-demand proof.
 
 See [STATUS.md](STATUS.md) and [CHANGELOG.md](CHANGELOG.md).
 
