@@ -7,6 +7,7 @@
 MOV is the acceptance layer between machine payment and machine action. It evaluates the exact result of a paid API, MCP tool, or machine service against buyer-owned acceptance requirements **before downstream software uses it**.
 
 - Website: https://machineoutcome.com/
+- Public repository: https://github.com/SamCT86/mov-runtime-acceptance
 - Public release: **0.1.0**
 - Operator: **Sarmad Tawfeek · Sweden**
 - Contact: `sarmad@machineoutcome.com`
