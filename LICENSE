@@ -1,0 +1,17 @@
+Machine Outcome Verification — License Notice
+
+MOV 0.1.0 software is offered under the PolyForm Perimeter License 1.0.1.
+
+Canonical terms:
+https://polyformproject.org/licenses/perimeter/1.0.1/
+
+The canonical PolyForm terms control. This repository is a public developer,
+documentation, contract, example, and release-verification surface for MOV. Nothing
+in this repository broadens, replaces, or overrides the license grant that applies
+to the MOV software release.
+
+PolyForm Perimeter is a source-available license. MOV should not be described as
+OSI open source.
+
+For licensing questions or a separately negotiated commercial license, contact:
+sarmad@machineoutcome.com

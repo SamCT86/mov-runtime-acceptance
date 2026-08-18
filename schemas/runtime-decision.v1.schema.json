@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision",
+    "obligation_id",
+    "attempt_id",
+    "payment",
+    "delivery",
+    "acceptance",
+    "reason_codes",
+    "evidence_hash",
+    "contract_hash",
+    "verifier_manifest",
+    "decided_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "mov.runtime-decision.v1"
+    },
+    "decision": {
+      "anyOf": [
+        { "type": "string", "const": "ACCEPT" },
+        { "type": "string", "const": "REJECT" },
+        { "type": "string", "const": "UNKNOWN" }
+      ]
+    },
+    "obligation_id": { "type": "string", "minLength": 1 },
+    "attempt_id": { "type": "string", "minLength": 1 },
+    "payment": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {
+          "anyOf": [
+            { "type": "string", "const": "NOT_REQUIRED" },
+            { "type": "string", "const": "REQUIRED" },
+            { "type": "string", "const": "SUBMITTED" },
+            { "type": "string", "const": "SETTLED" },
+            { "type": "string", "const": "FAILED" },
+            { "type": "string", "const": "UNKNOWN" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "delivery": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {
+          "anyOf": [
+            { "type": "string", "const": "NOT_OBSERVED" },
+            { "type": "string", "const": "DELIVERED" },
+            { "type": "string", "const": "FAILED" },
+            { "type": "string", "const": "UNKNOWN" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "acceptance": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {
+          "anyOf": [
+            { "type": "string", "const": "ACCEPT" },
+            { "type": "string", "const": "REJECT" },
+            { "type": "string", "const": "UNKNOWN" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^MOV(?:\\.[A-Z][A-Z0-9_]*){2,}$",
+        "description": "Stable namespaced MOV reason code"
+      },
+      "uniqueItems": true
+    },
+    "evidence_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "Lowercase SHA-256 digest with sha256: prefix"
+    },
+    "contract_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "Lowercase SHA-256 digest with sha256: prefix"
+    },
+    "verifier_manifest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["verifier_id", "verifier_version"],
+        "properties": {
+          "verifier_id": { "type": "string", "minLength": 1 },
+          "verifier_version": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decided_at": { "type": "string", "minLength": 1 }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mov:schema:runtime-decision:v1",
+  "additionalProperties": false
+}

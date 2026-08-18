@@ -1,0 +1,104 @@
+{
+  "schema_version": "mov.discovery.v1",
+  "product": {
+    "name": "Machine Outcome Verification",
+    "wedge": "Runtime Acceptance for Paid Agent Services",
+    "north_star": "MOV is the acceptance layer between machine payment and machine action.",
+    "primary_question": "Your agent paid. Should it trust the result?",
+    "initial_rail": "x402",
+    "public_release": "0.1.0"
+  },
+  "runtime": {
+    "buyer_decisions": [
+      "ACCEPT",
+      "REJECT",
+      "UNKNOWN"
+    ],
+    "kernel_outcomes": [
+      "VERIFIED",
+      "FAILED",
+      "UNKNOWN"
+    ],
+    "mapping": {
+      "VERIFIED": "ACCEPT",
+      "FAILED": "REJECT",
+      "UNKNOWN": "UNKNOWN"
+    },
+    "acceptance_owner": "buyer",
+    "unknown_is_first_class": true
+  },
+  "interfaces": {
+    "cli": {
+      "status": "AVAILABLE_PUBLIC_LOCAL",
+      "package": "@mov/cli",
+      "version": "0.1.0",
+      "command": "mov accept",
+      "distribution": "https://machineoutcome.com/downloads/mov-runtime-acceptance-0.1.0.tgz",
+      "registry_published": false,
+      "machine_output_schema": "schemas/runtime-decision.v1.schema.json"
+    },
+    "typescript": {
+      "status": "AVAILABLE_PUBLIC_LOCAL",
+      "package": "@mov/cli",
+      "version": "0.1.0",
+      "symbol": "mov.accept",
+      "distribution": "https://machineoutcome.com/downloads/mov-runtime-acceptance-0.1.0.tgz",
+      "registry_published": false,
+      "machine_output_schema": "schemas/runtime-decision.v1.schema.json"
+    },
+    "hosted_runtime_api": {
+      "status": "NOT_PUBLICLY_AVAILABLE"
+    },
+    "hosted_continuous_acceptance": {
+      "status": "NOT_PUBLICLY_AVAILABLE"
+    }
+  },
+  "release": {
+    "manifest": "https://machineoutcome.com/downloads/release.json",
+    "artifact": "https://machineoutcome.com/downloads/mov-runtime-acceptance-0.1.0.tgz",
+    "sha256": "9544c311ad4dd0d9087a7c7e58b7c579886b40ba999e10ee2bec0ce7f3789544",
+    "size_bytes": 62465,
+    "live_payment_capability": false
+  },
+  "truth_boundaries": {
+    "payment_success_establishes_acceptance": false,
+    "http_2xx_establishes_acceptance": false,
+    "receipt_validity_establishes_acceptance": false,
+    "delivery_presence_establishes_acceptance": false,
+    "schema_pass_establishes_acceptance": false,
+    "merchant_assertion_establishes_acceptance": false,
+    "independent_source_evidence_required_when_contract_requires_it": true,
+    "deterministic_version_pinned_verifiers_preferred": true
+  },
+  "safety": {
+    "local_recorded_accept_performs_network_calls": false,
+    "local_recorded_accept_invokes_signing_action": false,
+    "local_recorded_accept_initiates_purchase": false,
+    "local_recorded_accept_reads_runtime_secrets": false,
+    "live_payment_execution_requires_separate_explicit_authorization": true,
+    "ambiguous_economic_execution_allows_blind_retry": false
+  },
+  "repository": {
+    "scope": "PUBLIC_DEVELOPER_SURFACE",
+    "private_implementation_core_included": false,
+    "private_git_history_included": false
+  },
+  "non_capabilities": [
+    "custody",
+    "escrow",
+    "generic_agent_evaluation",
+    "generic_llm_judging",
+    "provider_routing",
+    "reputation_graph",
+    "broad_multi_tenant_platform",
+    "cross_rail_platform"
+  ],
+  "docs": {
+    "readme": "README.md",
+    "architecture": "docs/architecture.md",
+    "runtime_decision": "docs/runtime-decision.md",
+    "release_verification": "docs/release-verification.md",
+    "public_boundary": "docs/public-boundary.md",
+    "security": "SECURITY.md"
+  }
+}
