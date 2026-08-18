@@ -2,6 +2,15 @@
 
 All notable changes to the public MOV developer surface are recorded here.
 
+## 2026-08-18 — Public developer-surface clarity pass
+
+- simplified the README around the core developer question: paid, delivered, accepted?
+- added concrete situations where MOV is useful
+- made the ordinary-assertion boundary explicit instead of pretending every paid call needs MOV
+- clarified what MOV 0.1.0 is not
+- tightened the public commercial-validation language so technical quality is not presented as market proof
+- preserved the private implementation boundary and existing public contracts/examples
+
 ## 0.1.0 — 2026-08
 
 Initial public Runtime Acceptance release.
